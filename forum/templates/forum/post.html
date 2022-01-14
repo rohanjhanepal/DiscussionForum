@@ -1,0 +1,22 @@
+{% extends "forum/base.html" %}
+
+{% block title %} {{ post.title }} {% endblock title %}
+
+{% block content %}
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.posted_on }}</p>
+    <p>{{ post.category.name }}</p>
+    <p>{{ post.subcategory.name }}</p>
+    <p>{{ post.posted_by.username }}</p>
+    <ul>
+        {% for answer in post.answer.all %}
+            <li>
+                <p>{{ answer.answer }}</p>
+                {% for upvote in answer.upvote.all %}
+                    <p>{{ upvote.user }}</p>
+                
+                {% endfor %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

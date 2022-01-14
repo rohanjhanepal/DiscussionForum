@@ -1,0 +1,31 @@
+{% extends "forum/base.html" %}
+{% load bootstrap4 %}
+
+
+{% block title %}Home{% endblock title %}
+
+
+
+{% block categories %}
+<h5 style="color: #acacac; font-family: Verdana, Geneva, Tahoma, sans-serif ;">By Categories</h5>
+{% for category in categories %}
+    <a href="#">{{ category.name }}</a>
+    {% for subcat in category.subcategory.all %}
+        <ul><li> {{ subcat.name }}</li></ul>
+    {% endfor %}
+{% endfor %}
+{% endblock categories %}
+
+
+
+{% block content %}
+{% bootstrap_messages %}
+<h6 >What's Trending <i class="fas fa-fire" style="color: #e25822;"></i></h6>
+{% for post in posts %}
+<div class="question-container">
+    <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }}</p>
+    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a></h5>
+    <p style="color: #acacac; padding-left: 3px;">5 answers</p>
+  </div>
+  {% endfor %}
+{% endblock content%}
