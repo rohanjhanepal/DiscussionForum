@@ -1,2 +1,35 @@
 {% extends "forum/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
 
+
+{% block css %} <link rel="stylesheet" href={% static "forum/css/login.css" %}>{% endblock css %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+
+{% block content %}
+    {% bootstrap_messages %}
+   <div class = "center" >
+        <h1>Login</h1>
+        <form action="{% url "forum:login" %}" method="POST">
+            {% csrf_token %}
+          <div class="txt_field">
+              <input type="text" required name="username">
+              <label>Username</label>
+          </div>
+          <p></p>
+            <div class="txt_field">
+                <input type="password" required name="password">
+                <label>Password</label>
+            </div><p></p>
+            <input type="submit" value="Login"><p></p>
+            <div class="signup_link"><a href="forgotpw.html">Forgot Password ?</a></div><p></p>
+            <div class="signup_link">
+                Not a member ? <a href="signup.html"><b>Signup</b></a>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

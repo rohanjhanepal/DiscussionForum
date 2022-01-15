@@ -1,10 +1,11 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from . import models
 
 
-def login(request):
+def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -13,9 +14,12 @@ def login(request):
             login(request, user)
             return redirect('forum:home')
         else:
+            messages.error(request, 'Something wrong with your username or password')
             return redirect('forum:login')
+    else:
 
-    return render(request, 'forum/login.html')
+        return render(request, 'forum/login.html')
+
 
 def logout_view(request):
     logout(request)

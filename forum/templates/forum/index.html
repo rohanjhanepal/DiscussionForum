@@ -1,6 +1,6 @@
 {% extends "forum/base.html" %}
 {% load bootstrap4 %}
-
+{% load static %}
 
 {% block title %}Home{% endblock title %}
 
@@ -20,6 +20,14 @@
 
 {% block content %}
 {% bootstrap_messages %}
+<div class="search-box">
+          
+    <input type="Button" name="ask" value="What do you want to ask?" class="btn btn-outline-primary main-btn"> 
+
+</div>
+<br>
+<br>
+
 <h6 >What's Trending <i class="fas fa-fire" style="color: #e25822;"></i></h6>
 {% for post in posts %}
 <div class="question-container">
