@@ -2,7 +2,9 @@ from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from . import models
+from . import forms
 
 
 def login_view(request):
@@ -20,6 +22,24 @@ def login_view(request):
 
         return render(request, 'forum/login.html')
 
+def signup_view(request):
+    form = forms.Create_user_form(request.POST or None)
+    if form.is_valid():
+        user = form.save()
+        user.refresh_from_db()
+        user = User.objects.get(username=form.cleaned_data.get('username'))
+        profile = models.Profile(user=user)
+        profile.first_name = form.cleaned_data['first_name']
+        profile.last_name = form.cleaned_data['last_name']
+        profile.gender = form.cleaned_data['gender']
+        profile.save()
+        form = forms.Create_user_form()
+        messages.success(request, 'Account created successfully')
+        redirect('forum:login')
+    context = {
+        'form' : form
+    }
+    return render(request, 'forum/signup.html',context=context)
 
 def logout_view(request):
     logout(request)

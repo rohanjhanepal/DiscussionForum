@@ -1,0 +1,42 @@
+{% extends "forum/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+{% block css %} <link rel="stylesheet" href={% static "forum/css/signup.css" %}>{% endblock css %}
+
+{% block title %}
+Signup as new user
+{% endblock title %}
+
+
+{% block content %}
+    {% bootstrap_messages %}
+    <div class="main">
+        <div class="register">
+            <h1 style="color:white;">REGISTER HERE</h1>
+            <form id="register" method="POST">
+                {% csrf_token %}
+                
+                <label>First Name : </label>
+                {{ form.first_name }}<br>
+                <label>Last Name : </label>
+                {{ form.last_name }}<br>
+                <label>Email : </label><br>
+                {{ form.email }}<br>
+                <label>Create a Username : </label><br>
+                {{ form.username }}<br>
+                <label>Create a Password : </label><br>
+                {{ form.password1 }}<br>
+                <label>Confirm Password : </label><br>
+                {{ form.password2 }}<br>
+                <label>Gender : </label>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {{ form.gender }}
+                <a href="{% url "forum:login" %}">
+                <input type="submit" value="Submit"><br></a>
+                
+                </form>
+        </div>
+    </div>
+{% endblock content %}

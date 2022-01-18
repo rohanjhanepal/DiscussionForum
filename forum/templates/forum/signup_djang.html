@@ -1,0 +1,29 @@
+{% extends "forum/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+{% block css %} <link rel="stylesheet" href={% static "forum/css/signup.css" %}>{% endblock css %}
+
+{% block title %}
+Signup as new user
+{% endblock title %}
+
+
+{% block content %}
+    {% bootstrap_messages %}
+    <div class="main">
+        <div class="register">
+            <h1>REGISTER HERE</h1>
+            <form id="register" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <a href="{% url "forum:login" %}">
+                <input type="button1" value="Submit"><br></a>
+                <h3>OR</h3>
+                <a href="https://accounts.google.com/signin">
+                <input type="button"value="Continue With Google"></a>
+                </form>
+        </div>
+    </div>
+{% endblock content %}

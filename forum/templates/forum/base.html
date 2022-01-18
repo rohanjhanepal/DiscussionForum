@@ -55,7 +55,7 @@
                               <a class="dropdown-item" href={% url "forum:logout" %}>Sign Out</a>
                             {% else %}
                               <a class="dropdown-item" href={% url "forum:login" %}>Sign In</a>
-                              <a class="dropdown-item" href="#">Signup</a>
+                              <a class="dropdown-item" href={% url "forum:signup" %}>Signup</a>
                             {% endif %}
                               
   

@@ -13,4 +13,5 @@ admin.site.register(models.Post)
 admin.site.register(models.Tag)
 admin.site.register(models.Answer)
 admin.site.register(models.Upvote)
+admin.site.register(models.Profile)
 
