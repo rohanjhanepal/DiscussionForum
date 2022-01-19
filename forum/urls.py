@@ -10,4 +10,6 @@ urlpatterns = [
     path('login' , views.login_view, name='login'),
     path('logout' , views.logout_view, name='logout'),
     path('signup' , views.signup_view, name='signup'),
+    path(r'^upvote/<int:id>/$' , views.upvote , name='upvote'),
+    path(r'^solved/<slug:slug>/$' , views.solved , name='solved'),
 ]

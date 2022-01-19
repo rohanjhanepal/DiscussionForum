@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
 from . import models
 from . import forms
 
@@ -76,3 +77,25 @@ def search(request):
         return render(request, 'forum/search.html', context=context)
     messages.error(request, 'You have to enter a search query')
     return redirect('forum:home')
+
+
+def upvote(request,**kwargs):
+    answer = models.Answer.objects.get(id=kwargs['id'])
+    user = request.user
+
+    if models.Upvote.objects.filter(answer=answer , user=user).exists():
+        pass
+    else:
+        upv = models.Upvote(user=user, answer=answer)
+        upv.save()
+    
+    
+    return redirect('forum:home')
+
+def solved(request,slug):
+    post = models.Post.objects.get(slug=slug)
+    if(not post.solved):
+        post.solved = True
+    post.save()
+    return redirect('forum:home')
+

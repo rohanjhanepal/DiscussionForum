@@ -1,22 +1,56 @@
 {% extends "forum/base.html" %}
+{% load actions %}
+
+{% define 0 as found_upvote %}
 
 {% block title %} {{ post.title }} {% endblock title %}
 
 {% block content %}
-    <h2>{{ post.title }}</h2>
+    <h2>{{ post.title }}</h2> 
+    {% if user.is_authenticated %}
+        
+        {% if user.username == post.posted_by.username %}
+            {% if post.solved is not True %}
+                <a href={% url "forum:solved" slug=post.slug %}>Solved</a>
+            {% else %}
+                <p>Solved</p>
+            {% endif %}
+        {% endif %}
+        
+    {% endif %}
     <p>{{ post.posted_on }}</p>
-    <p>{{ post.category.name }}</p>
-    <p>{{ post.subcategory.name }}</p>
-    <p>{{ post.posted_by.username }}</p>
+    <p>{{ post.category.name }} - {{ post.subcategory.name }}</p>
+    <p>By: {{ post.posted_by.username }}</p>
     <ul>
         {% for answer in post.answer.all %}
-            <li>
+            <li style="background-color:rgb(196, 196, 196)">
                 <p>{{ answer.answer }}</p>
+                <p>By:{{ answer.posted_by.username }}</p>
+                <p>upvotes:{{ answer.upvote.all|length }}</p>
+
+            {% if user.is_authenticated %}
+              {% if answer.upvote.all|length > 0 %}
                 {% for upvote in answer.upvote.all %}
-                    <p>{{ upvote.user }}</p>
+                  {% if user.username == upvote.user.username %}
+                  <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
+                  {% endif %}
+                {% endfor %} 
                 
-                {% endfor %}
+                {% if found_upvote == "0" %}
+                    <a href={% url "forum:upvote" id=answer.pk %}>upvote</a>
+                   <div style="display:none;">{{ found_upvote|add:"1" }} </div> <!-- do not touch this line of code -->
+                {% else %}
+                    <p>Already upvoted</p>
+                {% endif %}
+              {% else %}
+                 <a href={% url "forum:upvote" id=answer.pk %}>upvote</a>
+                 <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
+              {% endif %}
+            {% endif %}
             </li>
+            <br>
+            <div style="display:none;">{{ found_upvote|add:"-1" }} </div>  <!-- do not touch this line of code -->
+            
         {% endfor %}
     </ul>
 {% endblock content %}
