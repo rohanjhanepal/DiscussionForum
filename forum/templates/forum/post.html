@@ -23,7 +23,7 @@
     <p>By: {{ post.posted_by.username }}</p>
     <ul>
         {% for answer in post.answer.all %}
-            <li style="background-color:rgb(196, 196, 196)">
+            <li style="background-color:#c4c4c4">
                 <p>{{ answer.answer }}</p>
                 <p>By:{{ answer.posted_by.username }}</p>
                 <p>upvotes:{{ answer.upvote.all|length }}</p>

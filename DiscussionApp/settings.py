@@ -136,3 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRONJOBS = [
     ('*/2 * * * *', 'forum.cron.cron_one'),
 ]
+
+
+def get_base():
+    return os.path.dirname(os.path.dirname(__file__))

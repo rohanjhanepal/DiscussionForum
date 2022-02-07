@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save,post_save
 
 from . import utils
 
@@ -31,7 +31,7 @@ class Profile(models.Model):
 
     contribution_score = models.IntegerField(default=0)
     
-    
+    questions_answered = models.IntegerField(default=0)
 
     def get_contribution_score(self):
         return self.contribution_score
@@ -61,6 +61,12 @@ class Post(models.Model):
     posted_on = models.DateTimeField(default=timezone.now)
     views = models.IntegerField(default=0) #total times the post was viewed
 
+    answerCount = models.IntegerField(default=0) #number of answers
+    def increase_answer_count(self):
+        self.answerCount += 1
+        self.save()
+
+
     def __str__(self):
         return self.title
 
@@ -70,12 +76,20 @@ class Answer(models.Model):
     posted_on = models.DateTimeField(default=timezone.now)
 
     post = models.ForeignKey(Post, related_name='answer',on_delete=models.CASCADE)
+
+    upvotes = models.IntegerField(default=0)
+
+    def increase_upvotes(self):
+        self.upvotes += 1
+        self.save()
+
     def __str__(self):
         return self.answer
 
 class Upvote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     answer = models.ForeignKey('forum.Answer', related_name='upvote',on_delete=models.CASCADE)
+
     def __str__(self):
         return self.answer.post.title
 
@@ -105,8 +119,25 @@ class SubCategory(models.Model):
         verbose_name_plural = 'SubCategories'
 
 
+
+
+# SIGNALS
+
 def slug_generator(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = utils.unique_slug_generator_post(str(instance.title))
 
+def update_upvote_count(sender,instance,*args,**kwargs):
+    instance.answer.increase_upvotes()
+    instance.answer.save()
+
+def update_answer_count(sender,instance,*args,**kwargs):
+    instance.post.increase_answer_count()
+    instance.post.save()
+
 pre_save.connect(slug_generator, sender=Post)
+post_save.connect(update_upvote_count, sender=Upvote)
+post_save.connect(update_answer_count, sender=Answer)
+
+
+#END OF SIGNALS
