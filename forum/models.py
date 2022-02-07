@@ -65,6 +65,9 @@ class Post(models.Model):
     def increase_answer_count(self):
         self.answerCount += 1
         self.save()
+    def decrease_answer_count(self,factor):
+        self.answerCount -= factor
+        self.save()
 
 
     def __str__(self):
@@ -129,6 +132,8 @@ def slug_generator(sender, instance, *args, **kwargs):
 
 def update_upvote_count(sender,instance,*args,**kwargs):
     instance.answer.increase_upvotes()
+    instance.answer.post.decrease_answer_count(2)
+    instance.answer.post.save()
     instance.answer.save()
 
 def update_answer_count(sender,instance,*args,**kwargs):
