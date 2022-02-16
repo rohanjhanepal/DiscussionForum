@@ -12,4 +12,6 @@ urlpatterns = [
     path('signup' , views.signup_view, name='signup'),
     path(r'^upvote/<int:id>/$' , views.upvote , name='upvote'),
     path(r'^solved/<slug:slug>/$' , views.solved , name='solved'),
+    path(r'^category/<int:id>/$' , views.category_view , name='category'),
+    path(r'^subcategory/<int:id>/$' , views.sub_category_view , name='subcategory'),
 ]

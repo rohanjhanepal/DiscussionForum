@@ -53,4 +53,12 @@
             
         {% endfor %}
     </ul>
+    <div>
+        <h2>Recommended</h2>
+    {% for i in recommended_posts %}
+    <p><a href={% url "forum:post_detail" slug=i.slug %}>{{ i.title }}</a>----</p>
+
+    {% endfor %}
+</div>
+    
 {% endblock content %}

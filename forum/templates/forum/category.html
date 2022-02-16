@@ -1,0 +1,26 @@
+{% extends "forum/base.html" %}
+
+    
+    {% load bootstrap4 %}
+    {% load static %}
+    
+    {% block title %}{{ category.name }}{% endblock title %}
+
+
+
+    {% block content %}
+    {% bootstrap_messages %} 
+    <h2>Search Result</h2>
+    {% for post in posts %}
+<div class="question-container">
+    <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }}</p>
+    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a></h5>
+    <p style="color: #acacac; padding-left: 3px;">
+      {{ post.answerCount }} 
+      {% if post.answerCount > 1 %}  answers
+      {% else %}  answer
+      {% endif %}
+  </p>
+  </div>
+  {% endfor %}
+    {% endblock content %}

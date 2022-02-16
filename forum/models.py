@@ -52,8 +52,8 @@ class Post(models.Model):
 
     tag = models.ManyToManyField('forum.Tag', blank=True,related_name='tag')    
 
-    category = models.ForeignKey('forum.Category', related_name="category" ,on_delete=models.CASCADE, null=True, blank=True)
-    subcategory = models.ForeignKey('forum.SubCategory', related_name="subcategory" ,on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey('forum.Category', related_name="post_category" ,on_delete=models.CASCADE, null=True, blank=True)
+    subcategory = models.ForeignKey('forum.SubCategory', related_name="post_sub_category" ,on_delete=models.CASCADE, null=True, blank=True)
 
     solved = models.BooleanField(default=False) #has the problem been solved?
 

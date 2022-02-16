@@ -9,7 +9,7 @@ from django.conf import settings
 
 
 
-settings.configure()
+#settings.configure()
 
 '''['id', 'title', 'category', 'subcategory','answers' , 'combined']'''
 
@@ -21,11 +21,12 @@ index =None
 #base = settings.VARIABLE['BASE_DIR']
 #print(type(base))
 
+DATA = 'data/data.csv'
 
 def load_data():
     
-    #df = pd.read_csv(os.path.join(settings.BASE_DIR, 'data/data.csv'))
-    df = pd.read_csv('data/data.csv')
+    df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data.csv'))
+    #df = pd.read_csv(DATA)
     return df
     
 def pre_process():
@@ -75,13 +76,13 @@ def recommend(search_word):
     name = title
     idx = index[name]
     if(type(idx) == pd.core.series.Series):
-        print(type(idx) == pd.core.series.Series)
+        #print(type(idx) == pd.core.series.Series)
         idx = index[name]
         idx = idx[[random.randint(0,(len(idx)-1))]]
         idx = idx[name]
     else:
         idx = index[name]
-    print(index)
+    
     sig_scores = list(enumerate(sig[idx]))
     sig_scores = sorted(sig_scores, key=lambda x: x[1], reverse=True)
     sig_scores = sig_scores[1:8]
@@ -98,5 +99,5 @@ def recommend_pro(search_word):
     return post_list
 
 
-po = recommend_pro(2)
-print(po)
+#po = recommend_pro(2)
+#print(po)

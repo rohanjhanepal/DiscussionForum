@@ -9,9 +9,9 @@
 {% block categories %}
 <h5 style="color: #acacac; font-family: Verdana, Geneva, Tahoma, sans-serif ;">By Categories</h5>
 {% for category in categories %}
-    <a href="#">{{ category.name }}</a>
+    <a href={% url "forum:category" id=category.id %}>{{ category.name }}</a>
     {% for subcat in category.subcategory.all %}
-        <ul><li> {{ subcat.name }}</li></ul>
+        <ul><li> <a href={% url "forum:subcategory" id=subcat.id %}>{{ subcat.name }}</a></li></ul>
     {% endfor %}
 {% endfor %}
 {% endblock categories %}
