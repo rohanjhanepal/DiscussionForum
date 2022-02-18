@@ -37,3 +37,15 @@ class Create_user_form(UserCreationForm):
             raise forms.ValidationError(str(email) + " is already used , use another")
         if gender not in ['M', 'F']:
             raise forms.ValidationError("Gender error , don't tamper with data")
+
+class PostQuestionForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Post
+        fields = ['title','category','subcategory']
+
+        widgets = {
+            'title' :forms.TextInput(attrs ={'name':'title'}),
+            'category' :forms.Select(attrs ={'name':'category'}),
+            'subcategory' :forms.Select(attrs ={'name':'subcategory'}),
+        }

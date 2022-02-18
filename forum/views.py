@@ -66,6 +66,16 @@ def post_detail(request, slug): #post detail view for viewing post using slug
     recommended = recommend.recommend_pro(int(post.id))
     recommended = recommended[:2]
     recommended_posts = models.Post.objects.filter(id__in=recommended)
+    if request.user.is_authenticated:
+        
+        user = User.objects.filter(username=request.user.username).first()
+        
+        profile = models.Profile.objects.filter(user=user).first()
+        print("--------"+ profile.first_name)
+        if post.category not in profile.prefered_categories.all():
+            profile.prefered_categories.add(post.category) #.remove(post.category) to remove
+            profile.save()
+            
     context = {
         'post': post,
         'recommended_posts': recommended_posts,
@@ -124,8 +134,17 @@ def sub_category_view(request,id):
 
 def upvote(request,**kwargs):
     answer = models.Answer.objects.get(id=kwargs['id'])
-    user = request.user
-
+   
+    post = answer.post
+    if request.user.is_authenticated:
+       
+        user = User.objects.filter(username=request.user.username).first()
+        
+        profile = models.Profile.objects.filter(user=user).first()
+        print("--------"+ profile.first_name)
+        if post.category not in profile.prefered_categories.all():
+            profile.prefered_categories.add(post.category) #.remove(post.category) to remove
+            profile.save()
     if models.Upvote.objects.filter(answer=answer , user=user).exists():
         pass
     else:
@@ -142,3 +161,21 @@ def solved(request,slug):
     post.save()
     return redirect('forum:home')
 
+'''
+@login_required
+def post_question(request):
+    if request.method == 'POST':
+        form = forms.PostQuestionForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect('forum:home')
+    else:
+        form = forms.PostQuestionForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'forum/post_question.html', context=context)
+
+'''

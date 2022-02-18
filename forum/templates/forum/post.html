@@ -1,64 +1,114 @@
 {% extends "forum/base.html" %}
 {% load actions %}
-
+{% load static %}
 {% define 0 as found_upvote %}
+
+{% block css %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/cec955fd83.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="css/all.min.css"> -->
+    <link rel="stylesheet" href={% static "forum/css/post_detail.css" %}> 
+{% endblock css %}
 
 {% block title %} {{ post.title }} {% endblock title %}
 
-{% block content %}
-    <h2>{{ post.title }}</h2> 
-    {% if user.is_authenticated %}
-        
-        {% if user.username == post.posted_by.username %}
-            {% if post.solved is not True %}
-                <a href={% url "forum:solved" slug=post.slug %}>Solved</a>
-            {% else %}
-                <p>Solved</p>
-            {% endif %}
-        {% endif %}
-        
-    {% endif %}
-    <p>{{ post.posted_on }}</p>
-    <p>{{ post.category.name }} - {{ post.subcategory.name }}</p>
-    <p>By: {{ post.posted_by.username }}</p>
-    <ul>
-        {% for answer in post.answer.all %}
-            <li style="background-color:#c4c4c4">
-                <p>{{ answer.answer }}</p>
-                <p>By:{{ answer.posted_by.username }}</p>
-                <p>upvotes:{{ answer.upvote.all|length }}</p>
 
-            {% if user.is_authenticated %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="">
+           <div class="question-container">
+               <p style="color: #303030; margin-bottom: 0px;"><i class="fas fa-user-circle"
+                       style="margin: 5px; font-size: large; padding-left: 3px;"></i>{{ post.posted_by.username }}</p>
+               <ul>
+                   <li>
+                       <h5 style="color: blue; padding-left: 3px;">{{ post.title }}</h5>
+                   
+                       <button class="btn-answer" type="submit">Answer</button>
+                   </li>
+                   <li>
+                       {% if user.is_authenticated %}
+                       {% if user.username == post.posted_by.username %}
+                           {% if post.solved is not True %}
+                               <a href={% url "forum:solved" slug=post.slug %}>Solved</a>
+                           {% else %}
+                               <p>Solved</p>
+                           {% endif %}
+                       {% endif %}
+                       {% endif %}
+                   </li>
+                   <li>
+                       <p>{{ post.category.name }} / {{ post.subcategory.name }}</p>
+                   </li>
+               </ul>
+               <p style="color: #acacac; padding-left: 3px ;">{{ post.answerCount }} answers</p>
+
+               {% for answer in post.answer.all %}
+            <div class="question-container-answer">
+
+                <p style="color: #303030; margin-bottom: 0px;"><i class="fas fa-user-circle"
+                        style="margin: 5px; font-size: large;"></i>{{ answer.posted_by.username }}</p>
+                <h5 style="color: blue; padding-left: 3px;">Use calculator having built-in functions</h5>
+                <ul style="display: inline;">
+                    <li>
+                        <p style="color: #acacac; padding-left: 3px;">{{ answer.upvote.all|length }} Upvotes</p>
+                        {% if user.is_authenticated %}
               {% if answer.upvote.all|length > 0 %}
                 {% for upvote in answer.upvote.all %}
                   {% if user.username == upvote.user.username %}
                   <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
                   {% endif %}
-                {% endfor %} 
-                
-                {% if found_upvote == "0" %}
-                    <a href={% url "forum:upvote" id=answer.pk %}>upvote</a>
-                   <div style="display:none;">{{ found_upvote|add:"1" }} </div> <!-- do not touch this line of code -->
+                  {% endfor %} 
+                  
+                  {% if found_upvote == "0" %}
+                      <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;"></i> </a>
+                     <div style="display:none;">{{ found_upvote|add:"1" }} </div> <!-- do not touch this line of code -->
+                  {% else %}
+                      <p>Already upvoted</p>
+                  {% endif %}
                 {% else %}
-                    <p>Already upvoted</p>
+                <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;"></i> </a>
+                   <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
                 {% endif %}
-              {% else %}
-                 <a href={% url "forum:upvote" id=answer.pk %}>upvote</a>
-                 <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
               {% endif %}
-            {% endif %}
-            </li>
-            <br>
-            <div style="display:none;">{{ found_upvote|add:"-1" }} </div>  <!-- do not touch this line of code -->
-            
-        {% endfor %}
-    </ul>
-    <div>
-        <h2>Recommended</h2>
-    {% for i in recommended_posts %}
-    <p><a href={% url "forum:post_detail" slug=i.slug %}>{{ i.title }}</a>----</p>
+                        
+                    </li>
+                    <div style="display:none;">{{ found_upvote|add:"-1" }} </div>  <!-- do not touch this line of code -->
+                </ul>
 
-    {% endfor %}
+            </div>
+            {% endfor %}
+       </div>
+          
+        </div>
+        <div class="">
+           
+            <div class="right-sidebar-base">
+                <p style="padding-left:8px; padding-top:8px;font-weight:600;">Recommended for you </p>
+                <div class="recommendation-links">
+                    <ul>
+                        {% for i in recommended_posts %}
+                        <li style="padding-left:8px;font-weight: 580; padding-bottom: 5px;"> <a href={% url "forum:post_detail" slug=i.slug %}>{{ i.title }}</a>
+                               </li>
+                        
+                        {% endfor %}
+        
+                        <ul>
+        
+                </div>
+         </div>
+    </div>
 </div>
+  
     
 {% endblock content %}
