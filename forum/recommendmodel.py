@@ -59,7 +59,7 @@ def recommend(search_word):
     tfv_matrix = tfv.fit_transform(post_df['combined'])
     sig = sigmoid_kernel(tfv_matrix,tfv_matrix)
     index = pd.Series(post_df.index, index=post_df['id']).drop_duplicates()
-    #print(post_df['id'])
+    #print(sig)
    
     
     
