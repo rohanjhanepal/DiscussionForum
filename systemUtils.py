@@ -1,11 +1,12 @@
 #call write() function
 
 import csv , sqlite3 
-
+import os
 
 
 DB_FNAME = 'db.sqlite3'
 CSV_FNAME = 'data.csv'
+DESTINATION = 'forum/data.csv'
 
 fields = ['id', 'title', 'category', 'subcategory','answers' , 'combined']
 
@@ -85,4 +86,5 @@ def find(): #function just for debugging
 
 if __name__ == '__main__':
     write()
+    os.system('cp {} {}'.format(CSV_FNAME,DESTINATION))
     #find()

@@ -1,0 +1,9 @@
+open cmd in directory where manage.py is located and follow following:  
+1. pip install -r requirements.txt
+2. python
+3. import nltk
+4. nltk.download('all') 
+5. exit()
+
+
+(note: step 4 might take a while)

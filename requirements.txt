@@ -3,3 +3,6 @@ django-crontab
 django-bootstrap
 nltk
 pandas
+schedule
+bootstrap4
+sklearn
