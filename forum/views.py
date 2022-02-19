@@ -51,7 +51,13 @@ def logout_view(request):
 
 def index(request): #home page of discussion forum
     categories = models.Category.objects.all()
-    posts = models.Post.objects.all().order_by('-posted_on')
+    posts = models.Post.objects.order_by('-posted_on','views')
+    if request.user.is_authenticated:
+        user = User.objects.filter(username=request.user.username).first()
+        profile = models.Profile.objects.filter(user=user).first()
+        if profile.prefered_categories.all().__len__() != 0:
+            posts = posts.filter(category__in=profile.prefered_categories.all())
+
     context = {
         'categories': categories,
         'posts': posts,

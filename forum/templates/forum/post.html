@@ -50,19 +50,25 @@
                    <li>
                        <p>{{ post.category.name }} / {{ post.subcategory.name }}</p>
                    </li>
+                   <li>
+                    <p style="color: #acacac; padding-left: 3px ;">{{ post.answerCount }} answers</p>
+                   </li>
                </ul>
-               <p style="color: #acacac; padding-left: 3px ;">{{ post.answerCount }} answers</p>
+              
 
                {% for answer in post.answer.all %}
             <div class="question-container-answer">
 
                 <p style="color: #303030; margin-bottom: 0px;"><i class="fas fa-user-circle"
                         style="margin: 5px; font-size: large;"></i>{{ answer.posted_by.username }}</p>
-                <h5 style="color: blue; padding-left: 3px;">Use calculator having built-in functions</h5>
+                <h5 style=" padding-left: 3px;">{{ answer.answer }}</h5>
+                
                 <ul style="display: inline;">
-                    <li>
-                        <p style="color: #acacac; padding-left: 3px;">{{ answer.upvote.all|length }} Upvotes</p>
+                    <li style="">
+                        <p style="color: white; padding-left: 5px;">{{ answer.upvote.all|length }} Upvotes</p>
+                    </li>
                         {% if user.is_authenticated %}
+                    <li style="color:white;">
               {% if answer.upvote.all|length > 0 %}
                 {% for upvote in answer.upvote.all %}
                   {% if user.username == upvote.user.username %}
