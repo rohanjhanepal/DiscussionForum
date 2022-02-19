@@ -10,11 +10,11 @@
 
 
 {% block categories %}
-<h5 style="color: #acacac; font-family: Verdana, Geneva, Tahoma, sans-serif ;">By Categories</h5>
+<h5 style="color:rgb(87, 82, 82); font-family: Verdana, Geneva, Tahoma, sans-serif ; font-weight: bolder;">By Categories</h5>
 {% for category in categories %}
     <a href={% url "forum:category" id=category.id %}>{{ category.name }}</a>
     {% for subcat in category.subcategory.all %}
-        <ul><li> <a href={% url "forum:subcategory" id=subcat.id %}>{{ subcat.name }}</a></li></ul>
+        <ul style="list-style: none;"><li > <a class="cat" style="color: rgb(109, 104, 104) !important; margin-bottom: 2px !important;" href={% url "forum:subcategory" id=subcat.id %}>{{ subcat.name }}</a></li></ul>
     {% endfor %}
 {% endfor %}
 {% endblock categories %}

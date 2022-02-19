@@ -5,3 +5,12 @@
 .question-container{
     transition: all 0.5s ease-in-out;
 }
+
+.cat{
+    transform: scale(1);
+    transition: 0.5s ease-in-out;
+}
+
+.cat:hover{
+    transform:scale(1.05);
+}
