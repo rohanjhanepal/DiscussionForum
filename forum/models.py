@@ -129,6 +129,7 @@ class Notification(models.Model):
     answer = models.ForeignKey(Answer, related_name='notification',on_delete=models.CASCADE)
     viewed = models.BooleanField(default=False)
     to_user = models.ForeignKey(User , related_name='notification_to_user',on_delete=models.CASCADE)
+    on = models.DateTimeField(default=timezone.now)
     def __str__(self):
         return self.post.title + " " + self.answer.answer
 
@@ -153,14 +154,12 @@ def update_answer_count(sender,instance,*args,**kwargs):
     instance.post.increase_answer_count()
     instance.post.save()
 
-def notify(sender,instance,*args,**kwargs):
-    instance.to_user = instance.post.user
-    instance.save()
+
 
 pre_save.connect(slug_generator, sender=Post)
 post_save.connect(update_upvote_count, sender=Upvote)
 post_save.connect(update_answer_count, sender=Answer)
-post_save.connect(notify, sender=Notification)
+
 
 
 #END OF SIGNALS

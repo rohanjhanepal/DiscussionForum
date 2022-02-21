@@ -1,0 +1,67 @@
+{% extends "forum/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static "forum/css/notifications.css" %}">
+{% endblock %}
+
+
+
+
+{% block title %}
+    Notifications
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        
+        <div class="notification">
+            <h2 class="flex-container-center">Notifications </h2>
+
+            <ul class="list-group">
+                {% for i in notifications %}
+                    {% if i.post.solved %}
+                        <li class="list-group-item list-group-item-success">
+                            <strong>{{ i.answer.posted_by.username }}</strong> answered 
+                            <strong><em><a href={% url "forum:post_detail" slug=i.post.slug %}>{{ i.post.title }}</a></em></strong>
+                            <button type="button" class="btn btn-outline-primary" onclick="togglepop('{{ i.post.title }}','{{ i.answer.answer }}')">Show</button>
+                        </li>
+                    {% else %}
+                    <li class="list-group-item list-group-item-danger">
+                        <strong>{{ i.answer.posted_by.username }}</strong> answered 
+                        <strong><em><a href={% url "forum:post_detail" slug=i.post.slug %}>{{ i.post.title }}</a></em></strong>
+                        <button type="button" class="btn btn-outline-primary" onclick="togglepop('{{ i.post.title }}','{{ i.answer.answer }}')">Show</button>
+                    </li>
+                    {% endif %}
+                {% endfor %}
+              </ul>
+        </div>
+    </div>
+    <div class="full-screen flex-container-center-fs">
+        
+        <div class="answer-pop">
+        <h2 class="pop-ques flex-container-center"></h2>
+        <em><h4 class="pop-text flex-container-center">None</h4></em>
+        <button type="button" class="btn btn-outline-danger Cancel" onclick="togglepop('no')">X</button>
+        </div>
+    </div>
+{% endblock content %}
+
+
+
+{% block scripts %} 
+<script> 
+    function togglepop(question,answer) {
+        var x = document.querySelector(".flex-container-center-fs");
+        if (x.style.display === "none") {
+            document.querySelector(".pop-text").innerHTML = "= "+answer;
+            document.querySelector(".pop-ques").innerHTML = question;
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    </script>
+{% endblock scripts %}
+

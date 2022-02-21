@@ -1,0 +1,75 @@
+
+
+.flex-container-center
+{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.flex-container-center-fs
+{
+    display:none;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    
+}
+.full-screen{
+    position: absolute;
+    top:0;
+      left:0;
+      right:0;
+         bottom:0;
+         background-color: #00000098;
+         z-index: 22;
+         
+         backdrop-filter: blur(10px);
+         -webkit-backdrop-filter: blur(10px);
+         -moz-backdrop-filter: blur(10px);
+}
+
+.notification
+{
+    
+    width:100%;
+    
+}
+
+.Cancel
+{
+    position: absolute;
+    right:0;
+    top:0;
+    margin-left: auto;
+    margin-right: 5px;
+    margin-top: 5px;
+    border-radius: 40px;
+    transition: 00.4s ease-in-out;
+
+}
+.Cancel:hover
+{
+    border-radius: 5px;
+    transform: scale(1.1);
+}
+.answer-pop
+{
+    background-color:rgba(255, 255, 255);
+    width: 60%;
+    height:25%;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 5px 5px 8px -4px #888888;
+    
+}
+
+.pop-ques
+{
+    color:rgb(10, 10, 10);
+}
+.pop-text
+{
+    color:rgb(61, 61, 61);
+}

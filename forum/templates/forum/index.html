@@ -11,12 +11,19 @@
 
 {% block categories %}
 <h5 style="color: #acacac; font-family: Verdana, Geneva, Tahoma, sans-serif ;">By Categories</h5>
+<ul class="list-group" style="width:60%;">
 {% for category in categories %}
+    <li class="list-group-item list-group-item-action cat">
     <a href={% url "forum:category" id=category.id %}>{{ category.name }}</a>
+    <ul class="list-group list-group-flush sub-cat">
     {% for subcat in category.subcategory.all %}
-        <ul><li> <a href={% url "forum:subcategory" id=subcat.id %}>{{ subcat.name }}</a></li></ul>
+            <li class="list-group-item list-group-item-action list-group-item-light" style="display:none;"> <a href={% url "forum:subcategory" id=subcat.id %}>{{ subcat.name }}</a></li>
     {% endfor %}
+    </ul>
+    </li>
 {% endfor %}
+</ul>
+
 {% endblock categories %}
 
 
@@ -45,3 +52,28 @@
   </div>
   {% endfor %}
 {% endblock content%}
+
+
+{% block scripts %}
+  <script>
+      var cats = document.querySelectorAll('.cat')
+        for(var i=0;i<cats.length;i++){
+            cats[i].addEventListener('mouseover',function(){
+                var subcats = this.querySelectorAll('.sub-cat li')
+                for(var j=0;j<subcats.length;j++){
+                    subcats[j].style.display = 'block'
+                }
+            })
+        }
+        for(var i=0;i<cats.length;i++){
+            cats[i].addEventListener('mouseout',function(){
+                var subcats = this.querySelectorAll('.sub-cat li')
+                for(var j=0;j<subcats.length;j++){
+                    subcats[j].style.display = 'none'
+                }
+            })
+        }
+    
+     
+  </script>
+{% endblock %}

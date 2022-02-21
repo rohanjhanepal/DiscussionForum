@@ -1,3 +1,4 @@
+from unicodedata import category
 from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
@@ -147,7 +148,7 @@ def upvote(request,**kwargs):
         user = User.objects.filter(username=request.user.username).first()
         
         profile = models.Profile.objects.filter(user=user).first()
-        print("--------"+ profile.first_name)
+        
         if post.category not in profile.prefered_categories.all():
             profile.prefered_categories.add(post.category) #.remove(post.category) to remove
             profile.save()
@@ -158,30 +159,51 @@ def upvote(request,**kwargs):
         upv.save()
     
     
-    return redirect('forum:home')
+    return redirect('forum:post_detail',slug=post.slug)
 
 def solved(request,slug):
     post = models.Post.objects.get(slug=slug)
     if(not post.solved):
         post.solved = True
     post.save()
-    return redirect('forum:home')
+    return redirect('forum:post_detail',slug=slug)
 
-'''
+
+def answer_view(request,slug):
+    
+    post = models.Post.objects.get(slug=slug)
+    if request.method == 'POST':
+        answer = request.POST['answer']
+        
+        if answer:
+            ans = models.Answer(posted_by=request.user, post=post, answer=answer)
+            ans.save()
+            notify = models.Notification(post=post, answer=ans,to_user=post.posted_by)
+            notify.save()
+            messages.success(request, 'Answer posted successfully')
+            
+        messages.error(request, 'You have to enter an answer')
+    return redirect('forum:post_detail', slug=slug)
+
+@login_required
+def notification_view(request):
+    noti = models.Notification.objects.filter(to_user=request.user).order_by('-on')
+    context= {'notifications':noti}
+    return render(request, 'forum/notifications.html',context=context)
+
+
 @login_required
 def post_question(request):
     if request.method == 'POST':
-        form = forms.PostQuestionForm(request.POST)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.user = request.user
+        question = request.POST['question']
+        category = request.POST['category']
+        sub_category = request.POST['sub_category']
+        if question and category:
+            post = models.Post(user=request.user, question=question, category=category, sub_category=sub_category)
             post.save()
-            return redirect('forum:home')
-    else:
-        form = forms.PostQuestionForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'forum/post_question.html', context=context)
+            messages.success(request, 'Question posted successfully')
+            return redirect('forum:post_detail', slug=post.slug)
+        messages.error(request, 'You have to enter a question')
+    return redirect('forum:home')
+        
 
-'''

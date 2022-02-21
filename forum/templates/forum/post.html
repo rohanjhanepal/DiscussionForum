@@ -31,10 +31,14 @@
                <p style="color: #303030; margin-bottom: 0px;"><i class="fas fa-user-circle"
                        style="margin: 5px; font-size: large; padding-left: 3px;"></i>{{ post.posted_by.username }}</p>
                <ul>
+
                    <li>
                        <h5 style="color: blue; padding-left: 3px;">{{ post.title }}</h5>
-                   
-                       <button class="btn-answer" type="submit">Answer</button>
+                       {% if user.is_authenticated %}
+                       <button class="btn-answer" onclick="togglepop()">Answer</button>
+                       
+                        {% endif %}
+
                    </li>
                    <li>
                        {% if user.is_authenticated %}
@@ -50,9 +54,12 @@
                    <li>
                        <p>{{ post.category.name }} / {{ post.subcategory.name }}</p>
                    </li>
+                  
                    <li>
+                       
                     <p style="color: #acacac; padding-left: 3px ;">{{ post.answerCount }} answers</p>
                    </li>
+                 
                </ul>
               
 
@@ -112,9 +119,39 @@
                         <ul>
         
                 </div>
+                
          </div>
     </div>
 </div>
-  
+
+{% if user.is_authenticated %}
+<div class="full-screen flex-container-center">
+    <div class="answer-form">
+    <form action={% url "forum:answer" slug=post.slug %} class="container" method="POST">
+        {% csrf_token %}
+        <div class="answer-form-grp">
+        <input type="text" name="answer" placeholder="Write your answer here...." class="form-control form-control-submit" size="100"> 
+         <button type="submit" class="btn btn-success ans-submit">Submit</button>
+         <button type="button" class="btn btn-outline-danger Cancel" onclick="togglepop()">X</button>
+         </div>
+    </form> 
+    </div>
+</div>
+{% endif %}
     
 {% endblock content %}
+
+
+
+{% block scripts %} 
+<script> 
+    function togglepop() {
+        var x = document.querySelector(".flex-container-center");
+        if (x.style.display === "none") {
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    </script>
+{% endblock scripts %}

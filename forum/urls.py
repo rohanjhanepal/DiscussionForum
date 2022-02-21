@@ -14,4 +14,7 @@ urlpatterns = [
     path(r'^solved/<slug:slug>/$' , views.solved , name='solved'),
     path(r'^category/<int:id>/$' , views.category_view , name='category'),
     path(r'^subcategory/<int:id>/$' , views.sub_category_view , name='subcategory'),
+    path(r'^answer/<slug:slug>/$' , views.answer_view , name='answer'),
+    path('post_question' , views.post_question , name='post_question'),
+    path('notifications' , views.notification_view , name='notifications'),
 ]
