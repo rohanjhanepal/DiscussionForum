@@ -3,7 +3,87 @@
 {% load static %}
 {% block css %} 
 <link rel="stylesheet" href={% static "forum/css/index.css" %}>
-
+<style>
+    .full-screen{
+        position: absolute;
+        top:0;
+          left:0;
+          right:0;
+          bottom:0;
+          background-color: #00000098;
+          z-index: 22;
+          
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          -moz-backdrop-filter: blur(10px);
+    }
+    
+    .flex-container-center
+    {
+        display:none;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center;
+        
+    }
+    
+    .Cancel
+    {
+        position: absolute;
+        right:0;
+        top:0;
+        margin-left: auto;
+        margin-right: 5px;
+        margin-top: 5px;
+        border-radius: 40px;
+        transition: 00.4s ease-in-out;
+    
+    }
+    .Cancel:hover
+    {
+        border-radius: 5px;
+        transform: scale(1.1);
+    }
+    
+    .answer-form
+    {
+        background-color:rgba(255, 255, 255);
+        width: 60%;
+        height:45%;
+        position: relative;
+        border-radius: 5px;
+        box-shadow: 5px 5px 8px -4px #888888;
+        padding-left:20px;
+        
+    }
+    .answer-form-grp
+    {
+        display:flex;
+        flex-direction:column;
+        justify-content: center;
+        align-items: center !important;
+    }
+    
+    .ans-submit
+    {
+        margin-top: 15px;
+        background-image:linear-gradient(120deg,#fc874d,#ff3d41) ;
+        border:none;
+        border-radius :5px;
+        transition: 0.2s ease-in;
+        }
+    
+    .ans-submit:hover
+    {
+        border-radius: 10px;
+        transform: scale(1.1);
+        background-image:linear-gradient(120deg,#fc935f,#fc6164) ;
+    }
+    .form-control-submit
+    {
+        margin-top: 50px;
+    }
+</style>
 {% endblock css %}
 {% block title %}Home{% endblock title %}
 
@@ -32,7 +112,7 @@
 {% bootstrap_messages %}
 <div class="search-box">
           
-    <input type="Button" name="ask" value="What do you want to ask?" class="btn btn-outline-primary main-btn"> 
+    <input type="Button" name="ask" value="What do you want to ask?" class="btn btn-outline-primary main-btn" onclick="togglepop()"> 
 
 </div>
 <br>
@@ -51,6 +131,36 @@
     </p>
   </div>
   {% endfor %}
+
+ 
+{% if user.is_authenticated %}
+<div class="full-screen flex-container-center">
+    <div class="answer-form">
+    <h2 style="justify-content:center;align-item:center;display:flex;">Ask Something</h2>
+    <form action={% url "forum:post_question" %} class="container" method="POST">
+        {% csrf_token %}
+        <div class="answer-form-grp">
+        <input type="text" name="question" placeholder="Write your question here...." class="form-control form-control-submit" size="100"> 
+        <div class="input-group mb-3" style="margin-top:15px;">
+            <select class="form-select" id="inputGroupSelect01" name=>
+              <option selected>Categories...</option>
+              <option value="1">One</option>
+            </select>
+          </div> 
+          <div class="input-group mb-3">
+            <select class="form-select" id="inputGroupSelect01">
+              <option selected>Sub Categories...</option>
+              <option value="1">One</option>
+            </select>
+          </div> 
+        <button type="submit" class="btn btn-success ans-submit">Submit</button>
+         <button type="button" class="btn btn-outline-danger Cancel" onclick="togglepop()">X</button>
+         </div>
+    </form> 
+    </div>
+</div>
+{% endif %}
+
 {% endblock content%}
 
 
@@ -76,4 +186,29 @@
     
      
   </script>
+
+  <script> 
+    function togglepop(question,answer) {
+        var x = document.querySelector(".flex-container-center-fs");
+        if (x.style.display === "none") {
+            document.querySelector(".pop-text").innerHTML = "= "+answer;
+            document.querySelector(".pop-ques").innerHTML = question;
+            x.style.display = "flex";
+        } else {
+            x.style.display = "none";
+        }
+    }
+    </script>
+    <script> 
+        function togglepop() {
+            var x = document.querySelector(".flex-container-center");
+            if (x.style.display === "none") {
+                x.style.display = "flex";
+            } else {
+                x.style.display = "none";
+            }
+        }
+        </script>
 {% endblock %}
+
+
