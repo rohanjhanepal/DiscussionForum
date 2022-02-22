@@ -7,9 +7,9 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from . import models
 from . import forms
-
 from . import recommendmodel as recommend
 from . import advanced_search 
+import os
 
 def login_view(request):
     if request.method == 'POST':
@@ -53,6 +53,12 @@ def logout_view(request):
 def index(request): #home page of discussion forum
     categories = models.Category.objects.all()
     posts = models.Post.objects.order_by('-posted_on','views')
+
+    select = dict()
+    for i in categories:
+        select[i.name] = [j.name for j in i.subcategory.all()]
+    print(select)
+
     if request.user.is_authenticated:
         user = User.objects.filter(username=request.user.username).first()
         profile = models.Profile.objects.filter(user=user).first()
@@ -62,6 +68,7 @@ def index(request): #home page of discussion forum
     context = {
         'categories': categories,
         'posts': posts,
+        'selects':select,
         
     }
     return render(request, 'forum/index.html' , context=context)
@@ -70,9 +77,17 @@ def post_detail(request, slug): #post detail view for viewing post using slug
     post = models.Post.objects.filter(slug=slug).first()
     post.views += 1
     post.save()
-    recommended = recommend.recommend_pro(int(post.id))
-    recommended = recommended[:2]
-    recommended_posts = models.Post.objects.filter(id__in=recommended)
+    try:
+        recommended = recommend.recommend_pro(int(post.id))
+        recommended = recommended[:2]
+        recommended_posts = models.Post.objects.filter(id__in=recommended)
+    except :
+        recommended_posts = []
+        rp= models.Post.objects.all()
+        for i in rp:
+            if i.category.name == post.category.name:
+                recommended_posts.append(i)
+
     if request.user.is_authenticated:
         
         user = User.objects.filter(username=request.user.username).first()
@@ -194,14 +209,23 @@ def notification_view(request):
 
 @login_required
 def post_question(request):
+    category_list = models.Category.objects.all()
+    sub = models.SubCategory.objects.all()
     if request.method == 'POST':
         question = request.POST['question']
         category = request.POST['category']
         sub_category = request.POST['sub_category']
         if question and category:
-            post = models.Post(user=request.user, question=question, category=category, sub_category=sub_category)
+            for  i in category_list:
+                if i.name == category:
+                    cat = i
+            for i in sub:
+                if i.name == sub_category:
+                    sub_cat = i
+            post = models.Post(posted_by=request.user, title=question, category=cat, subcategory=sub_cat)
             post.save()
             messages.success(request, 'Question posted successfully')
+            
             return redirect('forum:post_detail', slug=post.slug)
         messages.error(request, 'You have to enter a question')
     return redirect('forum:home')

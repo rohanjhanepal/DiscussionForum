@@ -49,13 +49,17 @@ def write():
         writer.writerow(fields)
         rec_no = 0
         for i in posts:
-           
+            
             category = conn.execute("SELECT * FROM forum_category where id = {}".format(i[6]))
             subcategory = conn.execute("SELECT * FROM forum_subcategory where id = {}".format(i[8]))
             answers = conn.execute("SELECT * FROM forum_answer where post_id = {}".format(i[0]))
             answers = answers.fetchall()
+            
             try:
-                fin = [i[0],i[1],category.fetchone()[1],subcategory.fetchone()[1],answers[max_upvoted(answers)][1]]
+                if len(answers) == 0:
+                    fin = [i[0],i[1],category.fetchone()[1],subcategory.fetchone()[1],' ']
+                else:
+                    fin = [i[0],i[1],category.fetchone()[1],subcategory.fetchone()[1],answers[max_upvoted(answers)][1]]
                 fin.append(' '.join(fin[1:]))
                 writer.writerow(fin)
                 print("writing {}th record".format(rec_no))
@@ -65,7 +69,7 @@ def write():
         print("\ndone writing {} records into {} file".format(rec_no,CSV_FNAME))
             
 
-
+'''
 def find(): #function just for debugging
     for i in posts:
         print(i[1])
@@ -82,9 +86,9 @@ def find(): #function just for debugging
         print(category.fetchone()[1])
         print(subcategory.fetchone()[1])
         print('\n')
-
+'''
 
 if __name__ == '__main__':
     write()
-    os.system('cp {} {}'.format(CSV_FNAME,DESTINATION))
+    #os.system('cp {} {}'.format(CSV_FNAME,DESTINATION))
     #find()

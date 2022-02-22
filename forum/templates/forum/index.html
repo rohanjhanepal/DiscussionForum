@@ -142,15 +142,16 @@
         <div class="answer-form-grp">
         <input type="text" name="question" placeholder="Write your question here...." class="form-control form-control-submit" size="100"> 
         <div class="input-group mb-3" style="margin-top:15px;">
-            <select class="form-select" id="inputGroupSelect01" name=>
-              <option selected>Categories...</option>
-              <option value="1">One</option>
+            <select class="form-select category" id="inputGroupSelect01" name="category">
+              <option selected value="None">Categories...</option>
+              {% for category in categories %}
+              <option value="{{ category.name }}">{{ category.name }}</option>
+              {% endfor %}
             </select>
           </div> 
           <div class="input-group mb-3">
-            <select class="form-select" id="inputGroupSelect01">
-              <option selected>Sub Categories...</option>
-              <option value="1">One</option>
+            <select class="form-select subcategory" id="inputGroupSelect01 subcategory" name="sub_category">
+              <option selected value="None">SubCategory..</option>
             </select>
           </div> 
         <button type="submit" class="btn btn-success ans-submit">Submit</button>
@@ -165,6 +166,7 @@
 
 
 {% block scripts %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   <script>
       var cats = document.querySelectorAll('.cat')
         for(var i=0;i<cats.length;i++){
@@ -208,6 +210,49 @@
                 x.style.display = "none";
             }
         }
+        </script>
+        <script>
+           var cat =document.querySelector(".category");
+           var sub = document.querySelector(".subcategory");
+           cat.addEventListener('change',function()
+           {   var val = cat.value;
+                
+            sub.innerHTML = '';
+
+                var context = {{ selects|safe }};
+
+                var con = context[val];
+                for (var i=0;i<con.length;i++)
+                {
+                    sub.innerHTML += '<option value='+context[val][i]+'>'+ context[val][i] + '</option\>';
+                }
+
+                
+                
+                
+
+                    /*
+                var context = {{ selects|safe }};
+                var fin='';
+                for(val i=0;i< context[val].length;i++)
+                {
+                    sub.innerHTML=  '<option value="'+context[val][i] +'">'+context[val][i]+'</option>';
+                }
+
+                sub.innerHTML=  '<option value="'+context[val][0] +'">'+context[val][i]+'</option>';
+                */
+                 
+                
+
+                
+               /*sub.innerHTML = '
+               <option selected>Sub Categories...</option\>'+
+               '{% for i in '+ val +'.subcategories.all %\}
+               <option value="{{ i.name }}">{{ i.name }}</option\>
+               {% endfor %\}
+               ';*/
+
+           });
         </script>
 {% endblock %}
 

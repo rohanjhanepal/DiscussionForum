@@ -158,4 +158,81 @@ h6{
       
    }
 
-   
+   .full-screen{
+    position: absolute;
+    top:0;
+      left:0;
+      right:0;
+      bottom:0;
+      background-color: #00000098;
+      z-index: 22;
+      
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      -moz-backdrop-filter: blur(10px);
+}
+
+.flex-container-center
+{
+    display:none;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.Cancel
+{
+    position: absolute;
+    right:0;
+    top:0;
+    margin-left: auto;
+    margin-right: 5px;
+    margin-top: 5px;
+    border-radius: 40px;
+    transition: 00.4s ease-in-out;
+
+}
+.Cancel:hover
+{
+    border-radius: 5px;
+    transform: scale(1.1);
+}
+
+.answer-form
+{
+    background-color:rgba(255, 255, 255);
+    width: 60%;
+    height:25%;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 5px 5px 8px -4px #888888;
+    
+}
+.answer-form-grp
+{
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center !important;
+}
+
+.ans-submit
+{
+    margin-top: 15px;
+    background-image:linear-gradient(120deg,#fc874d,#ff3d41) ;
+    border:none;
+    border-radius :5px;
+    transition: 0.2s ease-in;
+    }
+
+.ans-submit:hover
+{
+    border-radius: 10px;
+    transform: scale(1.1);
+    background-image:linear-gradient(120deg,#fc935f,#fc6164) ;
+}
+.form-control-submit
+{
+    margin-top: 50px;
+}

@@ -95,7 +95,7 @@ def recommend_pro(search_word):
     post_list = recommend(search_word)
     if(post_list == None):
         return None
-    
+    post_list.remove(search_word)
     return post_list
 
 

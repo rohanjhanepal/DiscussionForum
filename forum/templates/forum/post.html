@@ -35,8 +35,7 @@
                    <li>
                        <h5 style="color: blue; padding-left: 3px;">{{ post.title }}</h5>
                        {% if user.is_authenticated %}
-                       <button class="btn-answer" onclick="togglepop()">Answer</button>
-                       
+                       <button class="btn-answer" onclick="togglepopup()">Answer</button>
                         {% endif %}
 
                    </li>
@@ -132,7 +131,7 @@
         <div class="answer-form-grp">
         <input type="text" name="answer" placeholder="Write your answer here...." class="form-control form-control-submit" size="100"> 
          <button type="submit" class="btn btn-success ans-submit">Submit</button>
-         <button type="button" class="btn btn-outline-danger Cancel" onclick="togglepop()">X</button>
+         <button type="button" class="btn btn-outline-danger Cancel" onclick="togglepopup()">X</button>
          </div>
     </form> 
     </div>
@@ -145,7 +144,7 @@
 
 {% block scripts %} 
 <script> 
-    function togglepop() {
+    function togglepopup() {
         var x = document.querySelector(".flex-container-center");
         if (x.style.display === "none") {
             x.style.display = "flex";
@@ -153,5 +152,5 @@
             x.style.display = "none";
         }
     }
-    </script>
-{% endblock scripts %}
+</script>
+{% endblock %}
