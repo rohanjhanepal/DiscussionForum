@@ -82,6 +82,7 @@ class Answer(models.Model):
 
     upvotes = models.IntegerField(default=0)
 
+
     def increase_upvotes(self):
         self.upvotes += 1
         self.save()

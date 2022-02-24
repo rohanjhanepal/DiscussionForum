@@ -1,7 +1,7 @@
 import pandas as pd
 import random
 from sklearn.feature_extraction.text import TfidfVectorizer as vectorizer
-from sklearn.metrics.pairwise import sigmoid_kernel 
+from sklearn.metrics.pairwise import sigmoid_kernel , cosine_similarity
 import os
 
 from django.conf import settings
@@ -45,7 +45,7 @@ def process():
                 ngram_range=(1,3),
                 stop_words = 'english')
     tfv_matrix = tfv.fit_transform(post_df['combined'])
-    sig = sigmoid_kernel(tfv_matrix,tfv_matrix)
+    sig = cosine_similarity(tfv_matrix,tfv_matrix)
     index = pd.Series(post_df.index, index=post_df['title']).drop_duplicates()
     
 def recommend(search_word):
@@ -96,6 +96,7 @@ def recommend_pro(search_word):
     if(post_list == None):
         return None
     post_list.remove(search_word)
+    
     return post_list
 
 

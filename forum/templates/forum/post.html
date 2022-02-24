@@ -43,9 +43,9 @@
                        {% if user.is_authenticated %}
                        {% if user.username == post.posted_by.username %}
                            {% if post.solved is not True %}
-                               <a href={% url "forum:solved" slug=post.slug %}>Solved</a>
+                               <a href={% url "forum:solved" slug=post.slug %}>Mark Solved</a>
                            {% else %}
-                               <p>Solved</p>
+                           <a href={% url "forum:solved" slug=post.slug %}>Mark UnSolved</a>
                            {% endif %}
                        {% endif %}
                        {% endif %}
@@ -62,7 +62,7 @@
                </ul>
               
 
-               {% for answer in post.answer.all %}
+               {% for answer in answers %}
             <div class="question-container-answer">
 
                 <p style="color: #303030; margin-bottom: 0px;"><i class="fas fa-user-circle"
@@ -83,13 +83,13 @@
                   {% endfor %} 
                   
                   {% if found_upvote == "0" %}
-                      <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;"></i> </a>
+                      <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;color:white;"></i> </a>
                      <div style="display:none;">{{ found_upvote|add:"1" }} </div> <!-- do not touch this line of code -->
                   {% else %}
                       <p>Already upvoted</p>
                   {% endif %}
                 {% else %}
-                <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;"></i> </a>
+                <a href={% url "forum:upvote" id=answer.pk %}> <i class="fas fa-thumbs-up" style="margin-left:8px ;margin-top:2px;color:white;"></i> </a>
                    <div style="display:none;">{{ found_upvote|add:"1" }} </div>  <!-- do not touch this line of code -->
                 {% endif %}
               {% endif %}

@@ -13,3 +13,6 @@ def ncName():
     <functionBody>"
 6,How to solve vector numericals?,Science,Physics,Look at page 23 of science book,How to solve vector numericals? Science Physics Look at page 23 of science book
 7,How do i make H20 in chemistry?,Science,Chemistry, ,How do i make H20 in chemistry? Science Chemistry  
+8,How do i write python?,Programming,Python,do nothing,How do i write python? Programming Python do nothing
+9,What is slug in django Python?,Programming,Python, ,What is slug in django Python? Programming Python  
+10,What is Hydrogen in chemistry?,Science,Chemistry,Hydrogen is an element in chemistry,What is Hydrogen in chemistry? Science Chemistry Hydrogen is an element in chemistry

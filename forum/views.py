@@ -57,7 +57,7 @@ def index(request): #home page of discussion forum
     select = dict()
     for i in categories:
         select[i.name] = [j.name for j in i.subcategory.all()]
-    print(select)
+    
 
     if request.user.is_authenticated:
         user = User.objects.filter(username=request.user.username).first()
@@ -88,6 +88,7 @@ def post_detail(request, slug): #post detail view for viewing post using slug
             if i.category.name == post.category.name:
                 recommended_posts.append(i)
 
+
     if request.user.is_authenticated:
         
         user = User.objects.filter(username=request.user.username).first()
@@ -100,6 +101,7 @@ def post_detail(request, slug): #post detail view for viewing post using slug
             
     context = {
         'post': post,
+        'answers': post.answer.all().order_by('-upvotes'),
         'recommended_posts': recommended_posts,
     }
     return render(request, 'forum/post.html', context=context)
@@ -180,6 +182,8 @@ def solved(request,slug):
     post = models.Post.objects.get(slug=slug)
     if(not post.solved):
         post.solved = True
+    else:
+        post.solved = False
     post.save()
     return redirect('forum:post_detail',slug=slug)
 
@@ -196,7 +200,8 @@ def answer_view(request,slug):
             notify = models.Notification(post=post, answer=ans,to_user=post.posted_by)
             notify.save()
             messages.success(request, 'Answer posted successfully')
-            
+            os.system("python systemUtils.py")
+            return redirect('forum:post_detail', slug=slug)
         messages.error(request, 'You have to enter an answer')
     return redirect('forum:post_detail', slug=slug)
 
@@ -225,7 +230,7 @@ def post_question(request):
             post = models.Post(posted_by=request.user, title=question, category=cat, subcategory=sub_cat)
             post.save()
             messages.success(request, 'Question posted successfully')
-            
+            os.system("python systemUtils.py")
             return redirect('forum:post_detail', slug=post.slug)
         messages.error(request, 'You have to enter a question')
     return redirect('forum:home')

@@ -89,6 +89,7 @@ def find(): #function just for debugging
 '''
 
 if __name__ == '__main__':
+    os.system("cp ../db.sqlite3 ./")
     write()
-    os.system('cp {} {}'.format(CSV_FNAME,DESTINATION))
+    #os.system('cp {} {}'.format(CSV_FNAME,DESTINATION))
     #find()
