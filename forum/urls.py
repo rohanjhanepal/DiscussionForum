@@ -17,4 +17,5 @@ urlpatterns = [
     path(r'^answer/<slug:slug>/$' , views.answer_view , name='answer'),
     path('post_question' , views.post_question , name='post_question'),
     path('notifications' , views.notification_view , name='notifications'),
+    path('recommended_to_answer', views.recommend_questions , name='recommended_to_answer'),
 ]

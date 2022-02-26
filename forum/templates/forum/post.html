@@ -1,6 +1,7 @@
 {% extends "forum/base.html" %}
 {% load actions %}
 {% load static %}
+{% load bootstrap4 %}
 {% define 0 as found_upvote %}
 
 {% block css %}
@@ -21,7 +22,7 @@
 {% endblock css %}
 
 {% block title %} {{ post.title }} {% endblock title %}
-
+{% bootstrap_messages %}
 
 {% block content %}
 <div class="container-fluid">

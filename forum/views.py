@@ -18,6 +18,7 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
+            messages.success(request, 'Welcome,{}'.format(username))
             return redirect('forum:home')
         else:
             messages.error(request, 'Something wrong with your username or password')
@@ -40,6 +41,8 @@ def signup_view(request):
         form = forms.Create_user_form()
         messages.success(request, 'Account created successfully')
         redirect('forum:login')
+    else:
+        messages.error(request,"Error occoured , retry")
     context = {
         'form' : form
     }
@@ -73,13 +76,26 @@ def index(request): #home page of discussion forum
     }
     return render(request, 'forum/index.html' , context=context)
 
+
+def recommend_questions(request):
+    user = request.user
+    pref_sub = user.profile.prefered_categories.all()
+    posts = models.Post.objects.filter(solved=False)
+    posts_solved = models.Post.objects.filter(category__in = pref_sub)
+    context = {
+        'posts':posts,
+        'solved_posts':posts_solved,
+
+    }
+    return render(request, "forum/question_recommend.html",context = context)
+
 def post_detail(request, slug): #post detail view for viewing post using slug
     post = models.Post.objects.filter(slug=slug).first()
     post.views += 1
     post.save()
     try:
         recommended = recommend.recommend_pro(int(post.id))
-        recommended = recommended[:2]
+        recommended = recommended[:4]
         recommended_posts = models.Post.objects.filter(id__in=recommended)
     except :
         recommended_posts = []
@@ -175,7 +191,7 @@ def upvote(request,**kwargs):
         upv = models.Upvote(user=user, answer=answer)
         upv.save()
     
-    
+    messages.success(request,"{}, thanks for upvoting".format(request.user.username))
     return redirect('forum:post_detail',slug=post.slug)
 
 def solved(request,slug):
