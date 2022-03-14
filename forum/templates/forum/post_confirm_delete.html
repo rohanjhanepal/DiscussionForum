@@ -1,0 +1,18 @@
+
+{% extends "forum/base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+
+
+{% block content %}
+<form method="post">{% csrf_token %}
+     
+ 
+ 
+    <p>Are you sure you want to delete <strong>"{{ object }}"</strong>?</p>
+     
+     
+     
+        <input type="submit" value="Confirm" class="btn btn-danger">
+    </form>
+{% endblock %}

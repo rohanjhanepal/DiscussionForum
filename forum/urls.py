@@ -18,4 +18,6 @@ urlpatterns = [
     path('post_question' , views.post_question , name='post_question'),
     path('notifications' , views.notification_view , name='notifications'),
     path('recommended_to_answer', views.recommend_questions , name='recommended_to_answer'),
+    path('my_questions' , views.my_questions , name='my_questions'),
+     path('<slug>/delete/', views.PostDeleteView.as_view() , name="delete_post"),
 ]

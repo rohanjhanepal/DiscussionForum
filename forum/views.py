@@ -3,8 +3,9 @@ from django.shortcuts import render , redirect
 from django.contrib.auth import authenticate , login , logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.views.generic.edit import DeleteView
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect
 from . import models
 from . import forms
 from . import recommendmodel as recommend
@@ -41,8 +42,7 @@ def signup_view(request):
         form = forms.Create_user_form()
         messages.success(request, 'Account created successfully')
         redirect('forum:login')
-    else:
-        messages.error(request,"Error occoured , retry")
+    
     context = {
         'form' : form
     }
@@ -52,6 +52,21 @@ def logout_view(request):
     logout(request)
     messages.success(request, 'You have been logged out')
     return redirect('forum:home')
+
+
+class PostDeleteView(DeleteView):
+    
+    model = models.Post
+    success_url ="/"
+    template_name = "forum/post_confirm_delete.html"
+    def get_object(self):
+        obj = super().get_object()
+        if not obj.posted_by == self.request.user:
+            raise Http404
+        return obj
+    def delete(self, request, *args, **kwargs):
+        messages.success(request, 'Post Deleted')
+        return super().delete(request, *args, **kwargs)
 
 def index(request): #home page of discussion forum
     categories = models.Category.objects.all()
@@ -89,21 +104,41 @@ def recommend_questions(request):
     }
     return render(request, "forum/question_recommend.html",context = context)
 
+def my_questions(request):
+    user = request.user
+    
+    posts = models.Post.objects.filter(posted_by=user)
+    #posts_solved = models.Post.objects.filter(user=user)
+    context = {
+        'posts':posts,
+        
+
+    }
+    return render(request, "forum/my_questions.html",context = context)
+
 def post_detail(request, slug): #post detail view for viewing post using slug
     post = models.Post.objects.filter(slug=slug).first()
     post.views += 1
     post.save()
+    
+    '''recommended = recommend.recommend_pro(int(post.id))
+    recommended = recommended[:]
+    recommended_posts = models.Post.objects.filter(id__in=recommended)
+    print(recommended)'''
+    
     try:
         recommended = recommend.recommend_pro(int(post.id))
-        recommended = recommended[:4]
+        recommended = recommended[:]
         recommended_posts = models.Post.objects.filter(id__in=recommended)
+        print(recommended)
     except :
         recommended_posts = []
         rp= models.Post.objects.all()
         for i in rp:
             if i.category.name == post.category.name:
-                recommended_posts.append(i)
-
+                if i.slug != post.slug:
+                    recommended_posts.append(i)
+    
 
     if request.user.is_authenticated:
         
@@ -118,7 +153,7 @@ def post_detail(request, slug): #post detail view for viewing post using slug
     context = {
         'post': post,
         'answers': post.answer.all().order_by('-upvotes'),
-        'recommended_posts': recommended_posts,
+        'recommended_posts': recommended_posts[:3],
     }
     return render(request, 'forum/post.html', context=context)
 
@@ -216,7 +251,7 @@ def answer_view(request,slug):
             notify = models.Notification(post=post, answer=ans,to_user=post.posted_by)
             notify.save()
             messages.success(request, 'Answer posted successfully')
-            os.system("python systemUtils.py")
+            #os.system("python systemUtils.py")
             return redirect('forum:post_detail', slug=slug)
         messages.error(request, 'You have to enter an answer')
     return redirect('forum:post_detail', slug=slug)
@@ -246,7 +281,7 @@ def post_question(request):
             post = models.Post(posted_by=request.user, title=question, category=cat, subcategory=sub_cat)
             post.save()
             messages.success(request, 'Question posted successfully')
-            os.system("python systemUtils.py")
+            #os.system("python systemUtils.py")
             return redirect('forum:post_detail', slug=post.slug)
         messages.error(request, 'You have to enter a question')
     return redirect('forum:home')

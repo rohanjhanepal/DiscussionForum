@@ -68,7 +68,12 @@ nav{
 }
 
 
-
+.show
+{
+    background-image: linear-gradient(120deg,#ff996683,#ff5e6171);  
+    backdrop-filter: blur(7px);
+    transition: all 0.5s ease-in-out;
+}
 .container{
 
     display: flex;

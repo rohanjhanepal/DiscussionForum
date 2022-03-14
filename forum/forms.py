@@ -17,11 +17,11 @@ class Create_user_form(UserCreationForm):
         fields = ['first_name','last_name','email','username','password1','password2','gender']
 
         widgets = {
-            'username' :forms.TextInput(attrs ={'name':'username'})  ,
-            'email' :forms.EmailInput(attrs ={'name':'email'}),
-            'password1' :forms.PasswordInput(attrs ={'name':'password'}),
-            'first_name' :forms.TextInput(attrs ={'name':'firstname'}),
-            'last_name' :forms.TextInput(attrs ={'name':'lastname'}),
+            'username' :forms.TextInput(attrs ={'name':'username','class':'form-item'})  ,
+            'email' :forms.EmailInput(attrs ={'name':'email','class':'form-item'}),
+            'password1' :forms.PasswordInput(attrs ={'name':'password','class':'form-item'}),
+            'first_name' :forms.TextInput(attrs ={'name':'firstname','class':'form-item'}),
+            'last_name' :forms.TextInput(attrs ={'name':'lastname','class':'form-item'}),
         }
 
 

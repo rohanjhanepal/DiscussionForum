@@ -14,8 +14,8 @@ Signup as new user
     {% bootstrap_messages %}
     <div class="main">
         <div class="register">
-            <h1 style="color:white;">REGISTER HERE</h1>
-            <form id="register" method="POST">
+            <h1 style="color:white;">Register</h1>
+            <form id="register" method="POST" class="">
                 {% csrf_token %}
                 
                 <label>First Name : </label>
@@ -34,7 +34,7 @@ Signup as new user
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 {{ form.gender }}
                 <a href="{% url "forum:login" %}">
-                <input type="submit" value="Submit"><br></a>
+                <input type="submit" value="Join Us"><br></a>
                 
                 </form>
         </div>

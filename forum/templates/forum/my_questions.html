@@ -4,28 +4,42 @@
     {% load bootstrap4 %}
     {% load static %}
     
-    {% block title %}{{ query }} - Forum Search{% endblock title %}
+    {% block title %}My Questions{% endblock title %}
 
 
 
     {% block content %}
     {% bootstrap_messages %} 
-    <h2>Search Result</h2>
+    <h2>Posted By you</h2>
     {% for post in posts %}
 <div class="question-container">
     <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }}</p>
+    
     <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a>
-      {% if post.solved %}
-      <em style="color:green;">Solved</em>
-  {% else %}
-      <em style="color:red;">Unsolved</em>
-  {% endif %}</h5>
+        {% if post.solved %}
+        <em style="color:green;">Solved</em>
+    {% else %}
+        <em style="color:red;">Unsolved</em>
+    {% endif %}
+    </h5>
     <p style="color: #acacac; padding-left: 3px;">
       {{ post.answerCount }} 
       {% if post.answerCount > 1 %}  answers
       {% else %}  answer
       {% endif %}
+      
+  
   </p>
+  
+  <div  style="margin-bottom:5px;"> 
+    {% if post.solved is not True %}
+    <a class="btn btn-outline-success" href={% url "forum:solved" slug=post.slug %}>Mark Solved</a>
+{% else %}
+<a class="btn btn-outline-warning" href={% url "forum:solved" slug=post.slug %}>Mark UnSolved</a>
+{% endif %}
+    <a class="btn btn-outline-danger" href={% url "forum:delete_post" slug=post.slug %} style="color:red;">Delete</a>
+  </div>
   </div>
   {% endfor %}
+  
     {% endblock content %}

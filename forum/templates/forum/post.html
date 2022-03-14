@@ -38,15 +38,15 @@
                        {% if user.is_authenticated %}
                        <button class="btn-answer" onclick="togglepopup()">Answer</button>
                         {% endif %}
-
+ 
                    </li>
                    <li>
                        {% if user.is_authenticated %}
                        {% if user.username == post.posted_by.username %}
                            {% if post.solved is not True %}
-                               <a href={% url "forum:solved" slug=post.slug %}>Mark Solved</a>
+                               <a class="btn btn-outline-success" href={% url "forum:solved" slug=post.slug %}>Mark Solved</a>
                            {% else %}
-                           <a href={% url "forum:solved" slug=post.slug %}>Mark UnSolved</a>
+                           <a class="btn btn-outline-warning" href={% url "forum:solved" slug=post.slug %}>Mark UnSolved</a>
                            {% endif %}
                        {% endif %}
                        {% endif %}

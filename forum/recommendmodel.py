@@ -21,11 +21,12 @@ index =None
 #base = settings.VARIABLE['BASE_DIR']
 #print(type(base))
 
-DATA = 'data/data.csv'
+
 
 def load_data():
     
-    df = pd.read_csv(os.path.join(os.path.dirname(os.path.dirname(__file__)), 'data.csv'))
+    df = pd.read_csv( 'data.csv')
+    
     #df = pd.read_csv(DATA)
     return df
     
@@ -52,15 +53,17 @@ def recommend(search_word):
     
     post_df = pre_process() 
     
-    tfv = vectorizer(min_df=0.5 , max_features=None , strip_accents ='unicode' , analyzer='word'
+    '''tfv = vectorizer(min_df=0.1 , max_features=None , strip_accents ='unicode' , analyzer='word'
         ,token_pattern = r'\w{1,}' ,
                 ngram_range=(1,3),
-                stop_words = 'english')
+                stop_words = 'english')'''
+    tfv = vectorizer(analyzer='word', ngram_range=(1, 3), min_df=0.4 , stop_words='english')
     tfv_matrix = tfv.fit_transform(post_df['combined'])
-    sig = sigmoid_kernel(tfv_matrix,tfv_matrix)
+    sig = cosine_similarity(tfv_matrix,tfv_matrix)
     index = pd.Series(post_df.index, index=post_df['id']).drop_duplicates()
     #print(sig)
-   
+    
+    print(post_df['combined'].head())
     
     
     title= search_word
@@ -74,6 +77,8 @@ def recommend(search_word):
             max_se = se.ratio()
             '''
     name = title
+    
+   
     idx = index[name]
     if(type(idx) == pd.core.series.Series):
         #print(type(idx) == pd.core.series.Series)
@@ -95,7 +100,8 @@ def recommend_pro(search_word):
     post_list = recommend(search_word)
     if(post_list == None):
         return None
-    post_list.remove(search_word)
+    if search_word in post_list:
+        post_list.remove(search_word)
     
     return post_list
 

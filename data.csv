@@ -1,5 +1,4 @@
 id,title,category,subcategory,answers,combined
-2,How do i make a stack in C++?,Programming,C++,"That is easy , just stack things","How do i make a stack in C++? Programming C++ That is easy , just stack things"
 4,How do i do derivative of two functions?,Maths,Derivative,YOu can do dx/dt and then solve them to do the derivative,How do i do derivative of two functions? Maths Derivative YOu can do dx/dt and then solve them to do the derivative
 5,Can i add function inside function in python?,Programming,Python,"Yes , python programming allows adding functions too.
 just do:
@@ -9,5 +8,37 @@ just do:
 def ncName():
     <functionBody>"
 6,How to solve vector numericals?,Science,Physics, ,How to solve vector numericals? Science Physics  
-7,How do i make H20 in chemistry?,Science,Chemistry, ,How do i make H20 in chemistry? Science Chemistry  
-8,How do i write python?,Programming,Python,do nothing,How do i write python? Programming Python do nothing
+11,How do i do double slit experiment?,Science,Physics,By using glass,How do i do double slit experiment? Science Physics By using glass
+12,what is pythagorous theorem?,Maths,Geometry,pythagoras theorem of maths or optional maths is an old theorem used to calculate by following formula h^2=p^2+b^2,what is pythagorous theorem? Maths Geometry pythagoras theorem of maths or optional maths is an old theorem used to calculate by following formula h^2=p^2+b^2
+13,What are the features of C programming?,Programming,C,"Features of c programming are : It is procedure based language , easy hardware level programming etc","What are the features of C programming? Programming C Features of c programming are : It is procedure based language , easy hardware level programming etc"
+14,who is father of algebra ?,Maths,Algebra,"al Khwarizm is father of algebra, intrestingly he was also father of two kids","who is father of algebra ? Maths Algebra al Khwarizm is father of algebra, intrestingly he was also father of two kids"
+15,what are the basic commands used in C language?,Programming,C,"some of commands of C programming are printf , scanf , ","what are the basic commands used in C language? Programming C some of commands of C programming are printf , scanf , "
+16,how to do derivate of d(x*y) ?,Maths,Derivative,"derivative is very simple bro , just do some magic and the output is the required derivative","how to do derivate of d(x*y) ? Maths Derivative derivative is very simple bro , just do some magic and the output is the required derivative"
+17,Who developed C programming language?,Programming,C, ,Who developed C programming language? Programming C  
+18,Is C programming easy than C++?,Programming,C, ,Is C programming easy than C++? Programming C  
+19,how to find determinant of matrix ?,Maths,Algebra, ,how to find determinant of matrix ? Maths Algebra  
+20,What are the basic data types used in C language?,Programming,C, ,What are the basic data types used in C language? Programming C  
+21,how to do integration of (x*y) ?,Maths,Derivative, ,how to do integration of (x*y) ? Maths Derivative  
+22,Who is the original creator of C++ language?,Programming,C++, ,Who is the original creator of C++ language? Programming C++  
+23,how to do numerical of height and distance ?,Maths,Trigonometry, ,how to do numerical of height and distance ? Maths Trigonometry  
+24,how to calculate internal angle of regular polygon ?,Maths,Geometry, ,how to calculate internal angle of regular polygon ? Maths Geometry  
+25,how to calculate external angle of  regular polygon ?,Maths,Geometry, ,how to calculate external angle of  regular polygon ? Maths Geometry  
+26,what is latent heat of vapourization ?,Science,Thermodynamics, ,what is latent heat of vapourization ? Science Thermodynamics  
+27,how does 4 stroke engine work ?,Science,Thermodynamics, ,how does 4 stroke engine work ? Science Thermodynamics  
+28,what is unit of power of lens ?,Science,Optics, ,what is unit of power of lens ? Science Optics  
+29,what is difference of concave and convex lens ?,Science,Optics, ,what is difference of concave and convex lens ? Science Optics  
+30,What type of approach is used by C++?,Programming,C++, ,What type of approach is used by C++? Programming C++  
+31,what is schrodingers experiment ?,Science,Physics, ,what is schrodingers experiment ? Science Physics  
+32,What is the degeneracy of the state having energy equal to (for a 3-D harmonic oscillator)?,Science,QuantumMechanics,10,What is the degeneracy of the state having energy equal to (for a 3-D harmonic oscillator)? Science QuantumMechanics 10
+33,"If a 3-dimensional isotropic oscillator is in the state n=2 , then what is the degeneracy of the system?",Science,QuantumMechanics,6 is anwer,"If a 3-dimensional isotropic oscillator is in the state n=2 , then what is the degeneracy of the system? Science QuantumMechanics 6 is anwer"
+34,"how to distinguish alkane, alkene and alkynes ?",Science,Chemistry, ,"how to distinguish alkane, alkene and alkynes ? Science Chemistry  "
+35,What is C++?,Programming,C++, ,What is C++? Programming C++  
+36,is fullerene the hardest substance ?,Science,Chemistry, ,is fullerene the hardest substance ? Science Chemistry  
+37,what is conserved in photon electron colloision ? ,Science,Physics, ,what is conserved in photon electron colloision ?  Science Physics  
+38,An expression A.B in C++ means?,Programming,C++, ,An expression A.B in C++ means? Programming C++  
+39,which wave is produced when a stone is dropped on the surface of still water ?,Science,Physics,partly transverse and partly longitudional,which wave is produced when a stone is dropped on the surface of still water ? Science Physics partly transverse and partly longitudional
+45,what is python programming,Programming,Python, ,what is python programming Programming Python  
+46,What is machine learning?,Artificial Intelligence,MachineLearning,"Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.","What is machine learning? Artificial Intelligence MachineLearning Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention."
+47,why is machine learning so important?,Artificial Intelligence,MachineLearning,"Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.","why is machine learning so important? Artificial Intelligence MachineLearning Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention."
+55,What is machine learning and types?,Artificial Intelligence,MachineLearning, ,What is machine learning and types? Artificial Intelligence MachineLearning  
+56,how is mchine learning changing world?,Artificial Intelligence,MachineLearning,"Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.","how is mchine learning changing world? Artificial Intelligence MachineLearning Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention."

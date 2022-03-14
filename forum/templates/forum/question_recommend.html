@@ -14,17 +14,18 @@
     {% for post in posts %}
 <div class="question-container">
     <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }}</p>
-    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a></h5>
+    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a>
+        {% if post.solved %}
+        <em style="color:green;">Solved</em>
+    {% else %}
+        <em style="color:red;">Unsolved</em>
+    {% endif %}</h5>
     <p style="color: #acacac; padding-left: 3px;">
       {{ post.answerCount }} 
       {% if post.answerCount > 1 %}  answers
       {% else %}  answer
       {% endif %}
-      {% if post.solved %}
-      <div style="color:green;">Solved</div>
-  {% else %}
-      <div style="color:red;">Unsolved</div>
-  {% endif %}
+      
   </p>
   </div>
   {% endfor %}
@@ -32,17 +33,18 @@
   {% if post.solved %}
 <div class="question-container">
     <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }}</p>
-    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a></h5>
+    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a>
+        {% if post.solved %}
+        <em style="color:green;">Solved</em>
+    {% else %}
+        <em style="color:red;">Unsolved</em>
+    {% endif %}</h5>
     <p style="color: #acacac; padding-left: 3px;">
       {{ post.answerCount }} 
       {% if post.answerCount > 1 %}  answers
       {% else %}  answer
       {% endif %}
-      {% if post.solved %}
-      <div style="color:green;">Solved</div>
-  {% else %}
-      <div style="color:red;">Unsolved</div>
-  {% endif %}
+     
   </p>
   </div>
   {% endif %}

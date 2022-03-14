@@ -12,10 +12,11 @@
           bottom:0;
           background-color: #ffffff98;
           z-index: 22;
-          
-          backdrop-filter: blur(4px);
+          backdrop-filter: blur(6px);
           -webkit-backdrop-filter: blur(10px);
           -moz-backdrop-filter: blur(10px);
+          transition:2s ease-in-out;
+         
     }
     
     .flex-container-center
@@ -24,6 +25,7 @@
         flex-direction:column;
         justify-content: center;
         align-items: center;
+        transition: all 2s ease-in-out;
         
     }
     
@@ -114,7 +116,7 @@
     {% if user.is_authenticated %}
     <input type="Button" name="ask" value="What do you want to ask?" class="btn btn-outline-primary main-btn" onclick="togglepop()"> 
     {% else %}
-    <input type="Button" name="ask" value="Please Login to ask" class="btn btn-outline-primary main-btn" onclick=""> 
+    <input type="Button" name="ask" value="Please Login to ask" class="btn btn-outline-primary main-btn" onclick="location.href='{% url "forum:login" %}'"> 
     {% endif %}
     
 </div>
@@ -125,17 +127,18 @@
 {% for post in posts %}
 <div class="question-container" style="">
     <p style="color: #303030; margin-bottom: 0px;" ><i class="fas fa-user-circle" style="margin: 5px; font-size: large;"></i>{{ post.posted_by }} </p>
-    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a></h5>
+    <h5 style="color: blue; padding-left: 3px;"><a href={% url "forum:post_detail" slug=post.slug %}>{{ post.title }}</a>
+        {% if post.solved %}
+        <em style="color:green;">Solved</em>
+    {% else %}
+        <em style="color:red;">Unsolved</em>
+    {% endif %}</h5>
     <p style="color: #acacac; padding-left: 3px;">
         {{ post.answerCount }} 
         {% if post.answerCount > 1 %}  answers
         {% else %}  answer
         {% endif %}
-        {% if post.solved %}
-        <div style="color:green;">Solved</div>
-    {% else %}
-        <div style="color:red;">Unsolved</div>
-    {% endif %}
+        
     </p>
   </div>
   {% endfor %}
